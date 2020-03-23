@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MeetingApplication {
+public class MeetingApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(MeetingApplication.class, args);
+        SpringApplication.run(MeetingApp.class, args);
     }
 
 }
