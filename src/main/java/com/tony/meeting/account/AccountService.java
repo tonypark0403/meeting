@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -16,19 +17,19 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
+    private final PasswordEncoder passwordEncoder;
 
     private Account saveNewAccount(SignUpForm signUpForm) {
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
-                .password(signUpForm.getPassword())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .meetingCreatedByWeb(true)
                 .meetingEnrollmentResultByWeb(true)
                 .meetingUpdatedByWeb(true)
                 .build();
-        String encryptPWD = BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt());
-        account.setAccountId(UUID.randomUUID());
-        account.setPassword(encryptPWD);
+//        String encryptPWD = BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt());
+//        account.setPassword(encryptPWD);
         return accountRepository.save(account);
     }
 
