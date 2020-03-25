@@ -48,8 +48,9 @@ public class AccountController {
 //            return "account/sign-up";
 //        }
 
-        signUpForm = accountService.processNewAccount(signUpForm);
-        log.info("signUpForm after service : " + signUpForm);
+        Account account = accountService.processNewAccount(signUpForm);
+        accountService.login(account);
+        log.info("signUpForm after service : " + account);
         return "redirect:/";
     }
 
@@ -62,11 +63,11 @@ public class AccountController {
             return view;
         }
 
-        if (!account.getEmailCheckToken().equals(token)) {
+        if (!account.isValidToken(token)) {
             model.addAttribute("error", "wrong.token");
             return view;
         }
-
+        accountService.login(account);
         account.completeSignUp();
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());

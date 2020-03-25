@@ -64,4 +64,8 @@ public class Account {
         this.setJoinedAt(LocalDateTime.now());
         this.setModifiedAt(LocalDateTime.now());
     }
+
+    public boolean isValidToken(String token) {
+        return this.emailCheckToken.equals(token);
+    }
 }

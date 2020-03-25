@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -37,6 +39,13 @@ class AccountControllerTest {
     @MockBean
     JavaMailSender javaMailSender;
 
+    @DisplayName("Password check")
+    @Test
+    void checkPassword() {
+        String encryptedPassword = passwordEncoder.encode("test");
+        assertTrue(passwordEncoder.matches("test", encryptedPassword));
+    }
+
     @DisplayName("Test for checking of validated email with wrong input")
     @Test
     void checkEmailTokenWithWrongInput() throws Exception {
@@ -45,7 +54,8 @@ class AccountControllerTest {
                 .param("email", "test@test.com"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("account/checked-email"));
+                .andExpect(view().name("account/checked-email"))
+                .andExpect(unauthenticated());
     }
 
     @DisplayName("Test for checking of validated email")
@@ -66,7 +76,8 @@ class AccountControllerTest {
                 .andExpect(model().attributeDoesNotExist("error"))
                 .andExpect(model().attributeExists("nickname"))
                 .andExpect(model().attributeExists("numberOfUser"))
-                .andExpect(view().name("account/checked-email"));
+                .andExpect(view().name("account/checked-email"))
+                .andExpect(authenticated().withUsername("test"));
     }
 
     @DisplayName("Test for register page")
@@ -76,10 +87,11 @@ class AccountControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("account/sign-up"))
-                .andExpect(model().attributeExists("signUpForm"));
+                .andExpect(model().attributeExists("signUpForm"))
+                .andExpect(unauthenticated());
     }
 
-    @DisplayName("Test for input validation")
+    @DisplayName("Test for input validation with wrong value")
     @Test
     void signUpSubmitWithWrongInput() throws Exception {
         mockMvc.perform(post("/account/sign-up")
@@ -88,7 +100,8 @@ class AccountControllerTest {
                 .param("password", "12")
                 .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("account/sign-up"));
+                .andExpect(view().name("account/sign-up"))
+                .andExpect(unauthenticated());
     }
 
     @DisplayName("Test for input validation")
@@ -100,7 +113,8 @@ class AccountControllerTest {
                 .param("password", "test")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
+                .andExpect(view().name("redirect:/"))
+                .andExpect(authenticated().withUsername("test"));
 
         Account account = accountRepository.findByEmail("test@test.com");
         assertNotNull(account);
