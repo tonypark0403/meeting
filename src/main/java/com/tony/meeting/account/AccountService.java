@@ -17,7 +17,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
 
-    public SignUpForm register(SignUpForm signUpForm) {
+    private Account saveNewAccount(SignUpForm signUpForm) {
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
@@ -29,15 +29,24 @@ public class AccountService {
         String encryptPWD = BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt());
         account.setAccountId(UUID.randomUUID());
         account.setPassword(encryptPWD);
-        Account newAccount = accountRepository.save(account);
-        newAccount.generateEmailCheckToken();
+        return accountRepository.save(account);
+    }
+
+    private void sendSignUpConfirmedEmail(Account account) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setSubject("[Meeting] verification of registration");
-        mailMessage.setText("/account/check-email-token?token=" + newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
+        mailMessage.setText("/account/check-email-token?token=" + account.getEmailCheckToken() + "&email=" + account.getEmail());
         javaMailSender.send(mailMessage);
+    }
+
+    public SignUpForm processNewAccount(SignUpForm signUpForm) {
+        Account newAccount = saveNewAccount(signUpForm);
+        newAccount.generateEmailCheckToken();
+        sendSignUpConfirmedEmail(newAccount);
         BeanUtils.copyProperties(newAccount, signUpForm);
         return signUpForm;
     }
+
 
     public Account save(Account account) {
         String encryptPWD = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt());
