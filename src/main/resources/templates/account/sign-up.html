@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .cotainer {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <h1>Sign Up page</h1>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Register</h2>
+        </div>
+        <div class="row justify-content-center">
+            <form class="needs-validation col-sm-6" action="#"
+                  th:action="@{/sign-up}" th:object="${signUpForm}" method="post" novalidate>
+                <div class="form-group">
+                    <label for="nickname">Nickname</label>
+                    <input id="nickname" type="text" th:field="*{nickname}" class="form-control"
+                           placeholder="whiteship" aria-describedby="nicknameHelp" required minlength="3" maxlength="20">
+                    <small id="nicknameHelp" class="form-text text-muted">
+                        Hint : Please input without space, but characters and numbers sized between 3 and 20. You can change after registration.
+                    </small>
+                    <small class="invalid-feedback">Please input your nickname.</small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Nickname Error</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" th:field="*{email}" class="form-control"
+                           placeholder="your@email.com" aria-describedby="emailHelp" required>
+                    <small id="emailHelp" class="form-text text-muted">
+                        Your email will keep in secret.
+                    </small>
+                    <small class="invalid-feedback">Please input your E-mail.</small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" th:field="*{password}" class="form-control"
+                           aria-describedby="passwordHelp" required minlength="8" maxlength="50">
+                    <small id="passwordHelp" class="form-text text-muted">
+                        Hint : Please input without space, but characters, special ones and numbers sized between 8 and 50.
+                    </small>
+                    <small class="invalid-feedback">Please input your password.</small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit"
+                            aria-describedby="submitHelp">Sign Up</button>
+                    <small id="submitHelp" class="form-text text-muted">
+                        <a href="#">Email</a> : Any concert, email to us.
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
