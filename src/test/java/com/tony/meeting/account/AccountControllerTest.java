@@ -1,6 +1,5 @@
 package com.tony.meeting.account;
 
-import com.tony.meeting.ConsoleMailSender;
 import com.tony.meeting.domain.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -73,6 +71,7 @@ class AccountControllerTest {
         Account account = accountRepository.findByEmail("test@test.com");
         assertNotNull(account);
         assertNotEquals(account.getPassword(), "test");
+        assertNotNull(account.getEmailCheckToken());
         then(javaMailSender).should().send(any(SimpleMailMessage.class)); // check email
     }
 }
