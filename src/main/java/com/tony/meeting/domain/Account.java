@@ -55,4 +55,7 @@ public class Account {
 
     private boolean meetingUpdatedByWeb;
 
+    public void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+    }
 }
