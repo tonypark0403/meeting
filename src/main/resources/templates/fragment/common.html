@@ -7,7 +7,11 @@
     <head th:fragment="head">
         <meta charset="UTF-8">
         <th:block layout:fragment="html_head"></th:block>
-        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+        <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+        <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
         <style>
             .container {
                 max-width: 100%;
@@ -40,15 +44,19 @@
                     <a class="nav-link" th:href="@{/account/sign-up}">Register</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/notifications}">Notification</a>
+                    <a class="nav-link" th:href="@{/notifications}">
+                        <i class="fa fa-bell-o" aria-hidden="true"></i>
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link btn btn-outline-primary" th:href="@{/meeting/}">Create Meeting</a>
+                    <a class="nav-link btn btn-outline-primary" th:href="@{/meeting/}">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Create Meeting
+                    </a>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        Profile
+                        <svg data-jdenticon-value="user127" th:data-jdenticon-value="${#authentication.name}" width="24" height="24" class="rounded border bg-light"></svg>
                     </a>
                     <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
                         <h6 class="dropdown-header">
