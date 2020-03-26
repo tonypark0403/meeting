@@ -1,44 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Checked Email</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-        .container {
-            max-width: 100%;
-        }
-    </style>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragment/common :: head"></head>
+
+<th:block layout:fragment="html_head">
+    <title>Checked Email - Meeting</title>
+</th:block>
+
 <body class="bg-light">
-    <nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="/" th:href="@{/}">
-            <img src="/images/logo_sm.png" width="30" height="30">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <form th:action="@{/search/study}" class="form-inline" method="get">
-                        <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search studies..." aria-label="Search" />
-                    </form>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/sign-up}">Register</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    <div th:replace="fragment/common :: main-nav"></div>
     <div class="container">
         <div class="py-5 text-center" th:if="${error}">
             <p class="lead">Email check on Meeting</p>
@@ -57,5 +27,8 @@
             <small class="text-info">Please sign-in using email or nickname / password.</small>
         </div>
     </div>
+    <footer th:replace="fragment/common :: footer"></footer>
+    <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
