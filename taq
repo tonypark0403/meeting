@@ -1,0 +1,77 @@
+[33mcommit db65bb8fb0c18bc7eb90ea31d9c80146c3c9f4ef[m[33m ([m[1;36mHEAD -> [m[1;32mregister[m[33m, [m[1;31morigin/register[m[33m)[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 19:00:15 2020 -0400
+
+    got authenticated after signup
+
+[33mcommit ef811ee559d96e5abaa5eba8d8c861700a92d7a5[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 17:31:13 2020 -0400
+
+    added test code and refactored code after signup
+
+[33mcommit 37581320a02738c32449047a8bf0767ce56cd571[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 17:15:33 2020 -0400
+
+    added checked email feature
+
+[33mcommit 40d607329fff97d85e67b41077d036ed2af6a426[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 16:20:37 2020 -0400
+
+    used password encoder
+
+[33mcommit 654732d89aeb901c2eeb387ce039b1811991bee1[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 14:56:38 2020 -0400
+
+    added test and refactored service code
+
+[33mcommit 864bd1f5536efd3cce80a76456aa7f72ee5650a3[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 12:56:53 2020 -0400
+
+    added common email service for local env
+
+[33mcommit 906f6c7d989a287fa8fa17a62dec1467f152bc93[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 11:51:50 2020 -0400
+
+    splitted controller and added front and backend validator
+
+[33mcommit 95fcafda50c02066dbec3ad4c5a73bd90922b04b[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Wed Mar 25 10:20:37 2020 -0400
+
+    added sign-up form
+
+[33mcommit bb5d6bf02aa802d01d75b5ba266a459864424c09[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Mon Mar 23 22:05:14 2020 -0400
+
+    added test code
+
+[33mcommit e5305662986c663e3ecf87546e4fb7dfe11036e2[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Mon Mar 23 22:00:14 2020 -0400
+
+    added controller and customized security
+
+[33mcommit 766dfd7ad82a9e62148108d05b48afe1ad2407bb[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Mon Mar 23 21:45:08 2020 -0400
+
+    added client using angular
+
+[33mcommit ba2daf30bd5e9f2094be62c4af7f9d37823b0370[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Sun Mar 22 22:01:46 2020 -0400
+
+    added account domain
+
+[33mcommit 9f9da03c5331d41873f9e8a8562d4423ac9117d0[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/init[m[33m, [m[1;32mtask[m[33m, [m[1;32mmaster[m[33m, [m[1;32minit[m[33m)[m
+Author: Tony Park <tonypark0403@gmail.com>
+Date:   Sun Mar 22 21:25:57 2020 -0400
+
+    initialized project
