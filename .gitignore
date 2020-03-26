@@ -30,6 +30,11 @@ build/
 ### VS Code ###
 .vscode/
 
+### npm modules ###
+src/main/resources/static/node_modules
+src/main/resources/static/node
+src/main/resources/static/*lock*
+
 ### client ###
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
