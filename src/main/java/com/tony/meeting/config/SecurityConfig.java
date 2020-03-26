@@ -14,10 +14,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/", "/account", "/account/login", "/account/sign-up",
-                        "/account/check-email", "/account/check-email-token",
-                        "/account/email-login", "/account/check-email-login",
-                        "/account/login-link").permitAll()
+                .mvcMatchers("/", "/account/login", "/account/sign-up",
+                        "/account/check-email-token", "/account/email-login",
+                        "/account/check-email-login", "/account/login-link").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/account/profile/*").permitAll()
                 .anyRequest().authenticated();
     }

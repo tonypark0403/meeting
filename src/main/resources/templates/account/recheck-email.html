@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/common :: head"></head>
+<body class="bg-light">
+    <nav th:replace="fragment/common :: main-nav"></nav>
+    <div class="container">
+        <div class="py-5 text-center" th:if="${error != null}">
+            <p class="lead">Re-checked of the email</p>
+            <div  class="alert alert-danger" role="alert" th:text="${error}"></div>
+            <p class="lead" th:text="${email}">your@email.com</p>
+            <a class="btn btn-outline-info" th:href="@{/account/logout}">Logout</a>
+        </div>
+        <div class="py-5 text-center" th:if="${error == null}">
+            <p class="lead">Re-checked of the email</p>
+            <h2>Authenticated email is necessary.<br />Please check your email to use Meeting service.</h2>
+            <div>
+                <p class="lead" th:text="${email}">your@email.com</p>
+                <a class="btn btn-outline-info" th:href="@{/account/resend-confirm-email}">Re-send Email</a>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment/common :: footer"></footer>
+</body>
+</html>

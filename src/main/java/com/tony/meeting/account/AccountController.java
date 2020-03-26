@@ -12,7 +12,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/account")
@@ -72,5 +71,23 @@ public class AccountController {
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
         return view;
+    }
+
+    @GetMapping("/recheck-email")
+    public String reCheckEmail(@CurrentUser Account account, Model model) {
+        model.addAttribute("email", account.getEmail());
+        return "account/recheck-email";
+    }
+
+    @GetMapping("/resend-confirm-email")
+    public String resendConfirmEmail(@CurrentUser Account account, Model model) {
+        if(!account.canSendConfirmEmail()) {
+            model.addAttribute("error", "Please re-send after 1 hour.");
+            model.addAttribute("email", account.getEmail());
+            return "account/recheck-email";
+        }
+
+        accountService.sendSignUpConfirmedEmail(account);
+        return "redirect:/";
     }
 }
