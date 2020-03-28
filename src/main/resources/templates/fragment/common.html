@@ -38,7 +38,7 @@
 
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" th:href="@{/account/login}">Login</a>
+                    <a class="nav-link" th:href="@{/login}">Login</a>
                 </li>
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/account/sign-up}">Register</a>
