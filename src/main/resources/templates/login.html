@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragment/common :: head"></head>
+
+<th:block layout:fragment="html_head">
+    <title>Login - Meeting</title>
+</th:block>
+
+<body class="bg-light">
+<div th:replace="fragment/common :: main-nav"></div>
+<div class="container">
+    <div class="py-5 text-center">
+        <p class="lead">Meeting</p>
+        <h2>Login</h2>
+    </div>
+
+    <div class="row justify-content-center">
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            <p>Please check your email and password again!!!</p>
+            <p>If you don't remember your password, please click the button, <a href="#" th:href="@{/find-passsword}">Check Password</a></p>
+        </div>
+        <form class="needs-validation col-sm-6" action="#" th:action="@{/login}" method="post" novalidate>
+            <div class="form-group">
+                <label for="username">Email / Nickname</label>
+                <input id="username" type="text" name="username" class="form-control"
+                       placeholder="your@email.com" aria-describedby="emailHelp" required>
+                <small id="emailHelp" class="form-text text-muted">
+                    Please input validated email or nickname.
+                </small>
+                <small class="invalid-feedback">Please input validated email.</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" class="form-control"
+                       aria-describedby="passwordHelp" required>
+                <small id="passwordHelp" class="form-text text-muted">
+                    If you don't remember password, click <a href="#" th:href="@{/email-login}">Login without password</a>.
+                </small>
+                <small class="invalid-feedback">Please input password.</small>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+                <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">Remember</label>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-success btn-block" type="submit"
+                        aria-describedby="submitHelp">Login</button>
+                <small id="submitHelp" class="form-text text-muted">
+                    If you don't have account, please <a href="#" th:href="@{/signup}">Sign-Up</a> first.
+                </small>
+            </div>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragment/common :: footer"></footer>
+<script th:replace="fragment/common :: form-validation"></script>
+</body>
+</html>
