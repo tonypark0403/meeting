@@ -66,8 +66,7 @@ public class AccountController {
             model.addAttribute("error", "wrong.token");
             return view;
         }
-        accountService.login(account);
-        account.completeSignUp();
+        accountService.completeSignUp(account);
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
         return view;
@@ -89,5 +88,17 @@ public class AccountController {
 
         accountService.sendSignUpConfirmedEmail(account);
         return "redirect:/";
+    }
+
+    @GetMapping("/profile/{nickname}")
+    public String viewProfile(@PathVariable String nickname, Model model, @CurrentUser Account account) {
+        Account byNickname = accountRepository.findByNickname(nickname);
+        if(byNickname == null) {
+            throw new IllegalArgumentException("No exist nickname, " + nickname);
+        }
+
+        model.addAttribute(byNickname);
+        model.addAttribute("isOwner", byNickname.equals(account));
+        return "account/profile";
     }
 }
