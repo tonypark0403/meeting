@@ -13,9 +13,8 @@
 <body class="bg-light">
 <div th:replace="fragment/common :: main-nav"></div>
 <div class="container">
-    <div class="row mt-5 justify-content-center"><!-- mt-5 => margin-top: 3rem !important-->
-        <!-- col 12 중에서 col 10으로 센터 정렬로 사용 -->
-        <div class="col-2"><!-- 왼쪽은 2만큼 -->
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
             <!-- Avatar -->
             <svg th:if="${#strings.isEmpty(account.profileImage)}" class="img-fluid float-left rounded img-thumbnail"
                  th:data-jdenticon-value="${account.nickname}" width="125" height="125"></svg>
@@ -23,10 +22,10 @@
                  th:src="${account.profileImage}"
                  width="125" height="125"/>
         </div>
-        <div class="col-8"><!-- 오른쪽은 8만큼 -->
+        <div class="col-8">
             <h1 class="display-4 " th:text="${account.nickname}">Whiteship</h1>
             <p class="lead" th:if="${!#strings.isEmpty(account.bio)}" th:text="${account.bio}">bio</p>
-            <p class="lead" th:if="${#strings.isEmpty(account.bio) && isOwner}"><!-- owner가 아니면 추가하면 안됨 -->
+            <p class="lead" th:if="${#strings.isEmpty(account.bio) && isOwner}">
                 Please write one-line introduction.
             </p>
         </div>
@@ -73,9 +72,9 @@
                                 <i class="fa fa-calendar-o col-1"></i>
                             </span>
                         <span th:if="${isOwner && !account.emailVerified}" class="col-9">
-                                <a href="#" th:href="@{'/checkemail?email=' + ${account.email}}">Please check your email to complete registration.</a>
-                            </span>
-                        <span th:text="${#temporals.format(account.joinedAt, 'Joined at M-yyyy')}" class="col-9"></span>
+                            <a href="#" th:href="@{'/checkemail?email=' + ${account.email}}">Please check your email to complete registration.</a>
+                        </span>
+                        <span th:text="${#temporals.format(account.joinedAt, 'MMM, yyyy')}" class="col-9"></span>
                     </p>
                     <div th:if="${isOwner}">
                         <a class="btn btn-outline-primary" href="#" th:href="@{/settings/profile}">Edit Profile</a>
