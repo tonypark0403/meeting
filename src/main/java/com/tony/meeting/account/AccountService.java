@@ -1,6 +1,7 @@
 package com.tony.meeting.account;
 
 import com.tony.meeting.domain.Account;
+import com.tony.meeting.settings.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.mail.SimpleMailMessage;
@@ -74,7 +75,7 @@ public class AccountService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 
-    @Transactional(readOnly = true) // 읽기 전용 트랜잭션 - write lock을 안써서 성능의 유리
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(emailOrNickname);
@@ -90,5 +91,10 @@ public class AccountService implements UserDetailsService {
     public void completeSignUp(Account account) {
         account.completeSignUp();
         login(account);
+    }
+
+    public void updateProfile(Account account, Profile profile) {
+        BeanUtils.copyProperties(profile, account);
+        accountRepository.save(account);
     }
 }
