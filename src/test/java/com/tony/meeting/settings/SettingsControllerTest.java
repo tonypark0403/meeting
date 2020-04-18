@@ -2,20 +2,13 @@ package com.tony.meeting.settings;
 
 import com.tony.meeting.WithAccount;
 import com.tony.meeting.account.AccountRepository;
-import com.tony.meeting.account.AccountService;
-import com.tony.meeting.account.SignUpForm;
 import com.tony.meeting.domain.Account;
-import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.TestExecutionEvent;
-import org.springframework.security.test.context.support.WithSecurityContext;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +37,7 @@ class SettingsControllerTest {
     @Test
     void updateProfileForm() throws Exception {
         String bio = "case of updating bio";
-        mockMvc.perform(get(SettingsController.SETTINGS_PROFILE_URL))
+        mockMvc.perform(get(SettingsController.PROFILE_URL))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("profile"));
@@ -55,11 +48,11 @@ class SettingsControllerTest {
     @Test
     void updateProfile() throws Exception {
         String bio = "case of updating bio";
-        mockMvc.perform(post(SettingsController.SETTINGS_PROFILE_URL)
+        mockMvc.perform(post(SettingsController.PROFILE_URL)
                 .param("bio", bio)
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(SettingsController.SETTINGS_PROFILE_URL))
+                .andExpect(redirectedUrl(SettingsController.PROFILE_URL))
                 .andExpect(flash().attributeExists("message"));
 
         Account test = accountRepository.findByNickname("test");
@@ -71,7 +64,7 @@ class SettingsControllerTest {
     @Test
     void updateProfile_error() throws Exception {
         String bio = "case of updating bio more than 35 ...................................................................................................";
-        mockMvc.perform(post(SettingsController.SETTINGS_PROFILE_URL)
+        mockMvc.perform(post(SettingsController.PROFILE_URL)
                 .param("bio", bio)
                 .with(csrf()))
                 .andExpect(status().isOk())
