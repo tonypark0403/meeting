@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragment/common :: head">
+</head>
+
+<th:block layout:fragment="html_head">
+    <title>Password</title>
+</th:block>
+<body class="bg-light">
+    <div th:replace="fragment/common :: main-nav"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-2">
+                <div th:replace="fragment/common :: settings-menu(currentMenu='notifications')"></div>
+            </div>
+            <div class="col-8">
+                <div th:if="${message}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                    <span th:text="${message}">Complete</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row">
+                    <h2 class="col-sm-12" >Notification's settings</h2>
+                </div>
+                <div class="row mt-3" th:fragment="profile-form">
+                    <form class="col-12" action="#" th:action="@{/settings/notifications}" th:object="${notifications}" method="post" novalidate>
+                        <div class="alert alert-light" role="alert">
+                            Please set how you will be notified when meetings of <a href="#" th:href="@{/settings/keywords}">topics</a><strong>
+                            of interest to <a href="#" th:href="@{/settings/locations}">your main activity area</a> are created.
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" th:field="*{meetingCreatedByEmail}" class="custom-control-input" id="meetingCreatedByEmail">
+                                <label class="custom-control-label" for="meetingCreatedByEmail">Receive by Email</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" th:field="*{meetingCreatedByWeb}" class="custom-control-input" id="meetingCreatedByWeb">
+                                <label class="custom-control-label" for="meetingCreatedByWeb">Receive by Web</label>
+                            </div>
+                        </div>
+                        <div class="alert alert-light" role="alert">
+                            Set the method to receive notification of the results of <strong>the meeting's application</strong>.
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" th:field="*{meetingEnrollmentResultByEmail}" class="custom-control-input" id="meetingEnrollmentResultByEmail">
+                                <label class="custom-control-label" for="meetingEnrollmentResultByEmail">Receive by email</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" th:field="*{meetingEnrollmentResultByWeb}" class="custom-control-input" id="meetingEnrollmentResultByWeb">
+                                <label class="custom-control-label" for="meetingEnrollmentResultByWeb">Receive by web</label>
+                            </div>
+                        </div>
+                        <div class="alert alert-light" role="alert">
+                            Set how you will be notified of <strong>participating meetings</strong>.
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" th:field="*{meetingUpdatedByEmail}" class="custom-control-input" id="meetingUpdatedByEmail">
+                                <label class="custom-control-label" for="meetingUpdatedByEmail">Receive by email</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" th:field="*{meetingUpdatedByWeb}" class="custom-control-input" id="meetingUpdatedByWeb">
+                                <label class="custom-control-label" for="meetingUpdatedByWeb">Receive by web</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:replace="fragment/common :: form-validation"></script>
+</body>
+</html>

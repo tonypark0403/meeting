@@ -134,4 +134,40 @@ class SettingsControllerTest {
                 .andExpect(model().attributeExists("passwordForm"))
                 .andExpect(model().attributeExists("account"));
     }
+
+    @WithAccount("test")
+    @DisplayName("Update notifications form")
+    @Test
+    void updateNotifications_form() throws Exception {
+        mockMvc.perform(get(SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("notifications"));
+    }
+
+    @WithAccount("test")
+    @DisplayName("Update notifications - normal input")
+    @Test
+    void updateNotifications_success() throws Exception {
+        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL)
+                .param("meetingCreatedByEmail", "true")
+                .param("meetingCreatedByWeb", "true")
+                .param("meetingEnrollmentResultByEmail", "true")
+                .param("meetingEnrollmentResultByWeb", "true")
+                .param("meetingUpdatedByEmail", "true")
+                .param("meetingUpdatedByWeb", "true")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL))
+                .andExpect(flash().attributeExists("message"));
+
+        Account test = accountRepository.findByNickname("test");
+        assertTrue(test.isMeetingCreatedByEmail());
+        assertTrue(test.isMeetingCreatedByWeb());
+        assertTrue(test.isMeetingEnrollmentResultByEmail());
+        assertTrue(test.isMeetingEnrollmentResultByWeb());
+        assertTrue(test.isMeetingUpdatedByEmail());
+        assertTrue(test.isMeetingUpdatedByWeb());
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.tony.meeting.account;
 
 import com.tony.meeting.domain.Account;
+import com.tony.meeting.settings.Notifications;
 import com.tony.meeting.settings.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -100,6 +101,11 @@ public class AccountService implements UserDetailsService {
 
     public void updatePassword(Account account, String newPassword) {
         account.setPassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
+    }
+
+    public void updateNotifications(Account account, Notifications notifications) {
+        BeanUtils.copyProperties(notifications, account);
         accountRepository.save(account);
     }
 }

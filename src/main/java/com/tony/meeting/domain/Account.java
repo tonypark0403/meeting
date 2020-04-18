@@ -47,15 +47,15 @@ public class Account {
 
     private boolean meetingCreatedByEmail;
 
-    private boolean meetingCreatedByWeb;
+    private boolean meetingCreatedByWeb = true;
 
     private boolean meetingEnrollmentResultByEmail;
 
-    private boolean meetingEnrollmentResultByWeb;
+    private boolean meetingEnrollmentResultByWeb = true;
 
     private boolean meetingUpdatedByEmail;
 
-    private boolean meetingUpdatedByWeb;
+    private boolean meetingUpdatedByWeb = true;
 
 
     public void generateEmailCheckToken() {
