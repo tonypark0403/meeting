@@ -15,7 +15,7 @@ public class NicknameForm {
 
     @NotBlank
     @Length(min = 3, max = 20)
-    @Pattern(regexp = "^[a-zA-Z_]{3,20}$")
+    @Pattern(regexp = "^[a-zA-Z0-9_]{3,20}$")
     private String nickname;
 
     public NicknameForm(Account account) {

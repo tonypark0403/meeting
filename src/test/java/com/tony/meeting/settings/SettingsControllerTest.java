@@ -172,4 +172,43 @@ class SettingsControllerTest {
         assertTrue(test.isMeetingUpdatedByWeb());
     }
 
+    @WithAccount("test")
+    @DisplayName("Update nickname form")
+    @Test
+    void updateAccountForm() throws Exception {
+        mockMvc.perform(get(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.ACCOUNT_URL))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("nicknameForm"));
+    }
+
+    @WithAccount("test")
+    @DisplayName("Update nickname - normal input")
+    @Test
+    void updateAccount_success() throws Exception {
+        String newNickname = "test123";
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.ACCOUNT_URL)
+                .param("nickname", newNickname)
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.ACCOUNT_URL))
+                .andExpect(flash().attributeExists("message"));
+
+        assertNotNull(accountRepository.findByNickname("test123"));
+    }
+
+    @WithAccount("test")
+    @DisplayName("Update nickname - wrong input")
+    @Test
+    void updateAccount_failure() throws Exception {
+        String newNickname = "¯\\-test-";
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.ACCOUNT_URL)
+                .param("nickname", newNickname)
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name(SettingsController.SETTINGS + SettingsController.ACCOUNT_URL))
+                .andExpect(model().hasErrors())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("nicknameForm"));
+    }
 }
