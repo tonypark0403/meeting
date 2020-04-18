@@ -41,7 +41,7 @@ class SettingsControllerTest {
     @Test
     void updateProfileForm() throws Exception {
         String bio = "case of updating bio";
-        mockMvc.perform(get(SettingsController.SETTINGS + SettingsController.PROFILE_URL))
+        mockMvc.perform(get(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PROFILE_URL))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("profile"));
@@ -52,11 +52,11 @@ class SettingsControllerTest {
     @Test
     void updateProfile() throws Exception {
         String bio = "case of updating bio";
-        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.PROFILE_URL)
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PROFILE_URL)
                 .param("bio", bio)
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(SettingsController.SETTINGS + SettingsController.PROFILE_URL))
+                .andExpect(redirectedUrl(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PROFILE_URL))
                 .andExpect(flash().attributeExists("message"));
 
         Account test = accountRepository.findByNickname("test");
@@ -68,11 +68,11 @@ class SettingsControllerTest {
     @Test
     void updateProfile_error() throws Exception {
         String bio = "case of updating bio more than 35 ...................................................................................................";
-        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.PROFILE_URL)
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PROFILE_URL)
                 .param("bio", bio)
                 .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(view().name(SettingsController.SETTINGS_PROFILE_VIEW_NAME))
+                .andExpect(view().name(SettingsController.SETTINGS + SettingsController.PROFILE_URL))
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("profile"))
                 .andExpect(model().hasErrors());
@@ -85,7 +85,7 @@ class SettingsControllerTest {
     @DisplayName("Update password form")
     @Test
     void updatePassword_form() throws Exception {
-        mockMvc.perform(get(SettingsController.SETTINGS + SettingsController.PASSWORD_URL))
+        mockMvc.perform(get(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PASSWORD_URL))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("passwordForm"));
@@ -95,12 +95,12 @@ class SettingsControllerTest {
     @DisplayName("Update password - normal input")
     @Test
     void updatePassword_success() throws Exception {
-        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.PASSWORD_URL)
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PASSWORD_URL)
                 .param("newPassword", "12345678")
                 .param("newPasswordConfirm", "12345678")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(SettingsController.SETTINGS + SettingsController.PASSWORD_URL))
+                .andExpect(redirectedUrl(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PASSWORD_URL))
                 .andExpect(flash().attributeExists("message"));
 
         Account test = accountRepository.findByNickname("test");
@@ -111,35 +111,37 @@ class SettingsControllerTest {
     @DisplayName("Update password - wrong input")
     @Test
     void updatePassword_fail() throws Exception {
-        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.PASSWORD_URL)
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PASSWORD_URL)
                 .param("newPassword", "12345678")
                 .param("newPasswordConfirm", "11111111")
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("passwordForm"))
-                .andExpect(model().attributeExists("account"));
+                .andExpect(model().attributeExists("account"))
+                .andExpect(view().name(SettingsController.SETTINGS + SettingsController.PASSWORD_URL));
     }
 
     @WithAccount("test")
     @DisplayName("Update password - short input")
     @Test
     void updatePassword_shortInput() throws Exception {
-        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.PASSWORD_URL)
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.PASSWORD_URL)
                 .param("newPassword", "1234")
                 .param("newPasswordConfirm", "1234")
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("passwordForm"))
-                .andExpect(model().attributeExists("account"));
+                .andExpect(model().attributeExists("account"))
+                .andExpect(view().name(SettingsController.SETTINGS + SettingsController.PASSWORD_URL));;
     }
 
     @WithAccount("test")
     @DisplayName("Update notifications form")
     @Test
     void updateNotifications_form() throws Exception {
-        mockMvc.perform(get(SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL))
+        mockMvc.perform(get(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("notifications"));
@@ -149,7 +151,7 @@ class SettingsControllerTest {
     @DisplayName("Update notifications - normal input")
     @Test
     void updateNotifications_success() throws Exception {
-        mockMvc.perform(post(SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL)
+        mockMvc.perform(post(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL)
                 .param("meetingCreatedByEmail", "true")
                 .param("meetingCreatedByWeb", "true")
                 .param("meetingEnrollmentResultByEmail", "true")
@@ -158,7 +160,7 @@ class SettingsControllerTest {
                 .param("meetingUpdatedByWeb", "true")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL))
+                .andExpect(redirectedUrl(SettingsController.ROOT + SettingsController.SETTINGS + SettingsController.NOTIFICATIONS_URL))
                 .andExpect(flash().attributeExists("message"));
 
         Account test = accountRepository.findByNickname("test");

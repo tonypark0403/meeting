@@ -1,4 +1,4 @@
-package com.tony.meeting.settings;
+package com.tony.meeting.settings.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

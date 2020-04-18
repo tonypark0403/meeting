@@ -1,4 +1,4 @@
-package com.tony.meeting.settings;
+package com.tony.meeting.settings.form;
 
 import com.tony.meeting.domain.Account;
 import lombok.Data;
@@ -23,7 +23,6 @@ public class Notifications {
 
 
     public Notifications(Account account) {
-        //modelMapper(Bean으로 등록된...)를 사용할 경우는 이게 빈이 아니라서 사용할 수 없음
         BeanUtils.copyProperties(account, this);
     }
 }

@@ -1,5 +1,6 @@
-package com.tony.meeting.settings;
+package com.tony.meeting.settings.validator;
 
+import com.tony.meeting.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

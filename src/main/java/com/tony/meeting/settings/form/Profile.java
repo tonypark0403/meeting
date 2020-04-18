@@ -1,4 +1,4 @@
-package com.tony.meeting.settings;
+package com.tony.meeting.settings.form;
 
 import com.tony.meeting.domain.Account;
 import lombok.Data;

@@ -1,15 +1,15 @@
 package com.tony.meeting.account;
 
 import com.tony.meeting.domain.Account;
-import com.tony.meeting.settings.Notifications;
-import com.tony.meeting.settings.Profile;
+import com.tony.meeting.settings.form.NicknameForm;
+import com.tony.meeting.settings.form.Notifications;
+import com.tony.meeting.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -107,5 +107,11 @@ public class AccountService implements UserDetailsService {
     public void updateNotifications(Account account, Notifications notifications) {
         BeanUtils.copyProperties(notifications, account);
         accountRepository.save(account);
+    }
+
+    public void updateNickname(Account account, String nickname) {
+        account.setNickname(nickname);
+        accountRepository.save(account);
+        login(account);
     }
 }

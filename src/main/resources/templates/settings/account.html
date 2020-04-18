@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragment/common :: head">
+</head>
+
+<th:block layout:fragment="html_head">
+    <title>Profile</title>
+</th:block>
+<body class="bg-light">
+    <div th:replace="fragment/common :: main-nav"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-2">
+                <div th:replace="fragment/common :: settings-menu(currentMenu='account')"></div>
+            </div>
+            <div class="col-8">
+                <div th:if="${message}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                    <span th:text="${message}">Complete</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row">
+                    <h2 class="col-12">Update Nickname</h2>
+                </div>
+                <div class="row">
+                    <form class="needs-validation col-12" th:object="${nicknameForm}" th:action="@{/settings/account}" method="post" novalidate>
+                        <div class="alert alert-warning" role="alert">
+                            If you change your nickname, it also will be affected to your profile page link!
+                        </div>
+                        <div class="form-group">
+                            <input id="nickname" type="text" th:field="*{nickname}" class="form-control" aria-describedby="nicknameHelp" required>
+                            <small id="nicknameHelp" class="form-text text-muted">
+                                Enter only from 3 letters to 20 letters with no spaces. You can change it after signing up.
+                            </small>
+                            <small class="invalid-feedback">Input your nickname</small>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">nickname Error</small>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2 class="text-danger">Delete Account</h2>
+                        <div class="alert alert-danger" role="alert">
+                            This account cannot be deleted.
+                        </div>
+                        <button class="btn btn-outline-danger disabled">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
