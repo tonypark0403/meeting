@@ -26,16 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/", "/login", "/account/sign-up",
+                .mvcMatchers("/", "/account/login", "/account/sign-up",
                         "/account/check-email-token", "/account/email-login",
-                        "/account/check-email-login", "/account/login-link").permitAll()
+                        "/account/login-by-email", "/account/login-link").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/account/profile/*").permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin()
-                .loginPage("/login").permitAll();
+                .loginPage("/account/login").permitAll();
 
         http.logout()
+                .logoutUrl("/account/logout")
                 .logoutSuccessUrl("/");
 
         http.rememberMe()
@@ -47,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PersistentTokenRepository tokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        //datasource는 jpa를 사용하면 autowired로 가져오면 됨
         jdbcTokenRepository.setDataSource(dataSource);
         return jdbcTokenRepository;
     }

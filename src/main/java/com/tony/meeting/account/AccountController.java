@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -100,5 +101,46 @@ public class AccountController {
         model.addAttribute(byNickname);
         model.addAttribute("isOwner", byNickname.equals(account));
         return "account/profile";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "account/login";
+    }
+
+    @GetMapping("/email-login")
+    public String emailLoginForm() {
+        return "account/email-login";
+    }
+
+    @PostMapping("/email-login")
+    public String sendEmailLoginLink(String email, Model model, RedirectAttributes attributes) {
+        Account account = accountRepository.findByEmail(email);
+        if (account == null) {
+            model.addAttribute("error", email + " is invalid.");
+            return "account/email-login";
+        }
+
+        if (!account.canSendConfirmEmail()) {
+            model.addAttribute("error", "Email login is available after 1 hour.");
+            return "account/email-login"; // for test, commented
+        }
+
+        accountService.sendLoginLink(account);
+        attributes.addFlashAttribute("message", "An email verification email has been sent.");
+        return "redirect:/email-login";
+    }
+
+    @GetMapping("/login-by-email")
+    public String loginByEmail(String token, String email, Model model) {
+        Account account = accountRepository.findByEmail(email);
+        String view = "account/logged-in-by-email";
+        if (account == null || !account.isValidToken(token)) {
+            model.addAttribute("error", "You cannot log in.");
+            return view;
+        }
+
+        accountService.login(account);
+        return view;
     }
 }

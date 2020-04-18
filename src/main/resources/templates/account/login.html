@@ -18,9 +18,9 @@
     <div class="row justify-content-center">
         <div th:if="${param.error}" class="alert alert-danger" role="alert">
             <p>Please check your email and password again!!!</p>
-            <p>If you don't remember your password, please click the button, <a href="#" th:href="@{/find-passsword}">Check Password</a></p>
+            <p>If you don't remember your password, please click the button, <a href="#" th:href="@{/account/find-passsword}">Check Password</a></p>
         </div>
-        <form class="needs-validation col-sm-6" action="#" th:action="@{/login}" method="post" novalidate>
+        <form class="needs-validation col-sm-6" action="#" th:action="@{/account/login}" method="post" novalidate>
             <div class="form-group">
                 <label for="username">Email / Nickname</label>
                 <input id="username" type="text" name="username" class="form-control"
@@ -35,7 +35,7 @@
                 <input id="password" type="password" name="password" class="form-control"
                        aria-describedby="passwordHelp" required>
                 <small id="passwordHelp" class="form-text text-muted">
-                    If you don't remember password, click <a href="#" th:href="@{/email-login}">Login without password</a>.
+                    If you don't remember password, click <a href="#" th:href="@{/account/email-login}">Login without password</a>.
                 </small>
                 <small class="invalid-feedback">Please input password.</small>
             </div>
@@ -49,7 +49,7 @@
                 <button class="btn btn-success btn-block" type="submit"
                         aria-describedby="submitHelp">Login</button>
                 <small id="submitHelp" class="form-text text-muted">
-                    If you don't have account, please <a href="#" th:href="@{/signup}">Sign-Up</a> first.
+                    If you don't have account, please <a href="#" th:href="@{/account/sign-up}">Sign-Up</a> first.
                 </small>
             </div>
         </form>

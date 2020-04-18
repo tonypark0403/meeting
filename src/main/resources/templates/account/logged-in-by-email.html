@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragment/common :: head"></head>
+
+<th:block layout:fragment="html_head">
+    <title>Checked Email - Meeting</title>
+</th:block>
+
+<body class="bg-light">
+    <div th:replace="fragment/common :: main-nav"></div>
+    <div class="container">
+        <div class="py-5 text-center" th:if="${error}">
+            <p class="lead">Meetings email login</p>
+            <div  class="alert alert-danger" role="alert" th:text="${error}">
+                You cannot log in.
+            </div>
+        </div>
+
+        <div class="py-5 text-center" th:if="${error == null}">
+            <p class="lead">Meetings email login</p>
+            <h2>You are logged in with email. Please update your <a th:href="@{/settings/password}">password</a>.</h2>
+        </div>
+    </div>
+</body>
+</html>
